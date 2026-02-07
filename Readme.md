@@ -1,95 +1,58 @@
-# 📊 Farm Ads Text Clustering
+# Farm Ads Clustering 🌾
 
-Ovaj projekat se bavi **nenadgledanim klasterovanjem tekstualnih oglasa** iz skupa podataka **Farm-Ads**, sa ciljem otkrivanja prirodne grupisanosti dokumenata bez korišćenja labela tokom treniranja.
+Projekat za klasterovanje oglasa farmi korišćenjem različitih algoritama mašinskog učenja.
 
-Rad je realizovan u okviru predmeta **Istraživanje podataka 2** na Matematičkom fakultetu.
+## 🚀 Pokretanje
 
----
+### 1. Setup
+```bash
+# Kreiraj virtuelno okruženje
+python3 -m venv .venv
 
-## 🧠 Cilj projekta
+# Aktiviraj ga
+source .venv/bin/activate  # Linux/Mac
+.venv\Scripts\activate     # Windows
 
-- Ispitati da li algoritmi klasterovanja mogu automatski grupisati oglase po tematici  
-- Uporediti različite reprezentacije teksta i algoritme klasterovanja  
-- Evaluirati kvalitet klastera pomoću standardnih metrika  
-- Analizirati interpretabilnost dobijenih grupa  
+# Instaliraj zavisnosti
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+```
 
----
+### 2. Pokreni Jupyter Notebook
+```bash
+jupyter notebook farmadsclustering.ipynb
+```
 
-## 📁 Skup podataka
+### 3. Pokretanje ćelija
 
-**Farm-Ads dataset**
-- 4143 tekstualna oglasa  
-- Oglasi su tematski povezani sa poljoprivredom ili nisu  
-- Originalne oznake se koriste **samo za evaluaciju**, ne za treniranje  
+- **Pokreni sve odjednom**: `Cell` → `Run All`
+- **Ili pokreni redom**: `Shift + Enter` za svaku ćeliju
 
----
+## 📂 Gde se čuvaju rezultati
 
-## ⚙️ Obrada podataka
+Nakon izvršavanja, kreiraće se:
 
-Primijenjeni koraci:
+### `output/` folder - CSV i pickle fajlovi
+- `clustering_results.csv` - Svi rezultati algoritama
+- `data_clustered.csv` - Podaci sa klaster labelama
+- `best_model.pkl` - Najbolji model
+- `cluster_top_words.csv` - Top reči po klasterima
 
-- TF-IDF vektorizacija (više konfiguracija)  
-- Count Vectorizer  
-- Redukcija dimenzionalnosti:
-  - PCA  
-  - Truncated SVD (LSA)  
-- Dodavanje statističkih atributa teksta (dužina, broj reči, itd.)
+### `visualizations/` folder - Grafici (PNG)
+- `viz_2d.png` - 2D vizualizacija
+- `viz_3d.png` - 3D vizualizacija
+- `elbow_method.png` - Elbow grafik
+- `algorithm_comparison.png` - Poređenje algoritama
+- `best_model_visualization.png` - Najbolji model
 
-Ukupno korišćeno **6 skupova atributa**.
+## 📊 Šta notebook radi
 
----
-
-## 🤖 Korišćeni algoritmi
-
-Testirano je **8 konfiguracija klasterovanja**:
-
-- K-Means (K=3 i K=10)  
-- Agglomerative Clustering (Ward, Complete)  
-- DBSCAN (2 podešavanja)  
-- Mean Shift  
-- BIRCH  
-
-Ukupno: **48 eksperimenata** (8 algoritama × 6 reprezentacija).
-
----
-
-## 📏 Metrike evaluacije
-
-Kvalitet klastera meren je pomoću:
-
-- **Silhouette Score**  
-- **Davies–Bouldin Index**  
-- **Calinski–Harabasz Score**
+1. Učitava podatke (CSV sa kolonama `text` i `label`)
+2. Pravi TF-IDF reprezentacije teksta
+3. Primenjuje PCA, SVD, t-SNE redukciju
+4. Testira K-Means, DBSCAN, Agglomerative, Mean Shift, BIRCH
+5. Evaluira Silhouette, Davies-Bouldin, Calinski-Harabasz metrike
+6. Čuva rezultate u `output/` i grafike u `visualizations/`
 
 ---
 
-## 🏆 Glavni rezultat
-
-Najbolji balans performansi postignut je sa:
-
-**K-Means (K=3) + Count Vectorizer**
-
-Model pokazuje visoku separaciju i kompaktnost klastera, uz dobru interpretabilnost dobijenih grupa.
-
----
-
-## 🛠 Tehnologije
-
-- Python  
-- scikit-learn  
-- NumPy  
-- pandas  
-- matplotlib / seaborn  
-
----
-
-## 📌 Napomena
-
-Projekat demonstrira kompletan tok rada nad tekstualnim podacima:  
-**sirov tekst → vektorizacija → redukcija dimenzija → klasterovanje → evaluacija → interpretacija.**
-
----
-
-## ✍ Autor
-
-**Lazar Dunjić 265/2021**
+**Autor**: Lazar Dunjić 265/2021 
